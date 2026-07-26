@@ -23,3 +23,10 @@ def create_room(room: RoomCreate):
     rooms.append(room_data)
 
     return room_data
+
+@router.get("/rooms")
+def get_rooms():
+    return {
+        "total_rooms": len(rooms),
+        "rooms": rooms
+    }
