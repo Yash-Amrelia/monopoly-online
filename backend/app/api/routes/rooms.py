@@ -172,6 +172,36 @@ def roll_dice(room_id: str, data: RollDice):
                     player["position"] = (player["position"] + total) % 40
                     landed_tile = BOARD[player["position"]]
 
+                    rent_paid = None
+
+                    if (
+                        landed_tile["type"] == "property"
+                        and landed_tile["owner"] is not None
+                        and landed_tile["owner"] != player["username"]
+                    ):
+
+                        owner = next(
+                            (
+                                p
+                                for p in game_state["players"]
+                                if p["username"] == landed_tile["owner"]
+                            ),
+                            None
+                        )
+
+                        if owner:
+
+                            rent = landed_tile["rent"]
+
+                            player["money"] -= rent
+                            owner["money"] += rent
+
+                            rent_paid = {
+                                "paid_by": player["username"],
+                                "received_by": owner["username"],
+                                "amount": rent
+                            }
+
                     current_index = game_state["players"].index(player)
                     next_index = (current_index + 1) % len(game_state["players"])
 
@@ -184,7 +214,8 @@ def roll_dice(room_id: str, data: RollDice):
                         "current_turn": game_state["current_turn"],
                         "turn_number": game_state["turn_number"],
                         "player": player,
-                        "landed_on": landed_tile
+                        "landed_on": landed_tile,
+                        "rent_transaction": rent_paid
                     }
 
     raise HTTPException(
