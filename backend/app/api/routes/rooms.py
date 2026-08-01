@@ -3,6 +3,7 @@ from uuid import uuid4
 
 from app.schemas.room import RoomCreate
 from app.schemas.join_room import JoinRoom
+from app.schemas.start_game import StartGame
 
 router = APIRouter()
 
@@ -68,6 +69,48 @@ def join_room(room_id: str, player: JoinRoom):
 
             return {
                 "message": f"{player.username} joined successfully",
+                "room": room
+            }
+
+    raise HTTPException(
+        status_code=404,
+        detail="Room not found"
+    )
+
+@router.post("/rooms/{room_id}/start")
+def start_game(room_id: str, data: StartGame):
+
+    for room in rooms:
+
+        if room["room_id"] == room_id:
+
+            if room["host"] != data.host:
+                raise HTTPException(
+                    status_code=403,
+                    detail="Only the host can start the game"
+                )
+
+            if room["game_started"]:
+                raise HTTPException(
+                    status_code=400,
+                    detail="Game already started"
+                )
+
+            if len(room["players"]) < 2:
+                raise HTTPException(
+                    status_code=400,
+                    detail="Minimum 2 players required"
+                )
+
+            room["game_started"] = True
+
+            room["game_state"] = {
+                "current_turn": room["players"][0],
+                "turn_number": 1
+            }
+
+            return {
+                "message": "Game started successfully",
                 "room": room
             }
 
