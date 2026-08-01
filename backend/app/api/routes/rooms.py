@@ -8,6 +8,7 @@ from app.schemas.join_room import JoinRoom
 from app.schemas.start_game import StartGame
 from app.schemas.roll_dice import RollDice
 from app.game.board import BOARD
+from app.schemas.buy_property import BuyProperty
 
 router = APIRouter()
 
@@ -185,6 +186,68 @@ def roll_dice(room_id: str, data: RollDice):
                         "player": player,
                         "landed_on": landed_tile
                     }
+
+    raise HTTPException(
+        status_code=404,
+        detail="Room not found"
+    )
+
+@router.post("/rooms/{room_id}/buy-property")
+def buy_property(room_id: str, data: BuyProperty):
+
+    for room in rooms:
+
+        if room["room_id"] != room_id:
+            continue
+
+        if not room["game_started"]:
+            raise HTTPException(
+                status_code=400,
+                detail="Game has not started"
+            )
+
+        game_state = room["game_state"]
+
+        player = next(
+            (p for p in game_state["players"] if p["username"] == data.username),
+            None
+        )
+
+        if player is None:
+            raise HTTPException(
+                status_code=404,
+                detail="Player not found"
+            )
+
+        tile = BOARD[player["position"]]
+
+        if tile["type"] != "property":
+            raise HTTPException(
+                status_code=400,
+                detail="Current tile is not a property"
+            )
+
+        if tile["owner"] is not None:
+            raise HTTPException(
+                status_code=400,
+                detail="Property already owned"
+            )
+
+        if player["money"] < tile["price"]:
+            raise HTTPException(
+                status_code=400,
+                detail="Not enough money"
+            )
+
+        player["money"] -= tile["price"]
+        player["properties"].append(tile["position"])
+        tile["owner"] = player["username"]
+
+        return {
+            "message": "Property purchased successfully",
+            "player": player,
+            "property": tile
+        }
 
     raise HTTPException(
         status_code=404,
