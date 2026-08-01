@@ -1,70 +1,46 @@
 BOARD = [
-    {
-        "position": 0,
-        "name": "GO",
-        "type": "go"
-    },
-    {
-        "position": 1,
-        "name": "Mediterranean Avenue",
-        "type": "property",
-        "price": 60,
-        "rent": 2,
-        "owner": None
-    },
-    {
-        "position": 2,
-        "name": "Community Chest",
-        "type": "community_chest"
-    },
-    {
-        "position": 3,
-        "name": "Baltic Avenue",
-        "type": "property",
-        "price": 60,
-        "rent": 4,
-        "owner": None
-    },
-    {
-        "position": 4,
-        "name": "Income Tax",
-        "type": "tax",
-        "amount": 200
-    },
-    {
-        "position": 5,
-        "name": "Reading Railroad",
-        "type": "railroad",
-        "price": 200,
-        "owner": None
-    },
-    {
-        "position": 6,
-        "name": "Oriental Avenue",
-        "type": "property",
-        "price": 100,
-        "rent": 6,
-        "owner": None
-    },
-    {
-        "position": 7,
-        "name": "Chance",
-        "type": "chance"
-    },
-    {
-        "position": 8,
-        "name": "Vermont Avenue",
-        "type": "property",
-        "price": 100,
-        "rent": 6,
-        "owner": None
-    },
-    {
-        "position": 9,
-        "name": "Connecticut Avenue",
-        "type": "property",
-        "price": 120,
-        "rent": 8,
-        "owner": None
-    }
+    {"position": 0, "name": "GO", "type": "go"},
+
+    {"position": 1, "name": "Mediterranean Avenue", "type": "property", "price": 60, "rent": 2, "owner": None},
+    {"position": 2, "name": "Community Chest", "type": "community_chest"},
+    {"position": 3, "name": "Baltic Avenue", "type": "property", "price": 60, "rent": 4, "owner": None},
+    {"position": 4, "name": "Income Tax", "type": "tax", "amount": 200},
+    {"position": 5, "name": "Reading Railroad", "type": "railroad", "price": 200, "rent": 25, "owner": None},
+    {"position": 6, "name": "Oriental Avenue", "type": "property", "price": 100, "rent": 6, "owner": None},
+    {"position": 7, "name": "Chance", "type": "chance"},
+    {"position": 8, "name": "Vermont Avenue", "type": "property", "price": 100, "rent": 6, "owner": None},
+    {"position": 9, "name": "Connecticut Avenue", "type": "property", "price": 120, "rent": 8, "owner": None},
+    {"position": 10, "name": "Jail", "type": "jail"},
+
+    {"position": 11, "name": "St. Charles Place", "type": "property", "price": 140, "rent": 10, "owner": None},
+    {"position": 12, "name": "Electric Company", "type": "utility", "price": 150, "owner": None},
+    {"position": 13, "name": "States Avenue", "type": "property", "price": 140, "rent": 10, "owner": None},
+    {"position": 14, "name": "Virginia Avenue", "type": "property", "price": 160, "rent": 12, "owner": None},
+    {"position": 15, "name": "Pennsylvania Railroad", "type": "railroad", "price": 200, "rent": 25, "owner": None},
+    {"position": 16, "name": "St. James Place", "type": "property", "price": 180, "rent": 14, "owner": None},
+    {"position": 17, "name": "Community Chest", "type": "community_chest"},
+    {"position": 18, "name": "Tennessee Avenue", "type": "property", "price": 180, "rent": 14, "owner": None},
+    {"position": 19, "name": "New York Avenue", "type": "property", "price": 200, "rent": 16, "owner": None},
+    {"position": 20, "name": "Free Parking", "type": "free_parking"},
+
+    {"position": 21, "name": "Kentucky Avenue", "type": "property", "price": 220, "rent": 18, "owner": None},
+    {"position": 22, "name": "Chance", "type": "chance"},
+    {"position": 23, "name": "Indiana Avenue", "type": "property", "price": 220, "rent": 18, "owner": None},
+    {"position": 24, "name": "Illinois Avenue", "type": "property", "price": 240, "rent": 20, "owner": None},
+    {"position": 25, "name": "B&O Railroad", "type": "railroad", "price": 200, "rent": 25, "owner": None},
+    {"position": 26, "name": "Atlantic Avenue", "type": "property", "price": 260, "rent": 22, "owner": None},
+    {"position": 27, "name": "Ventnor Avenue", "type": "property", "price": 260, "rent": 22, "owner": None},
+    {"position": 28, "name": "Water Works", "type": "utility", "price": 150, "owner": None},
+    {"position": 29, "name": "Marvin Gardens", "type": "property", "price": 280, "rent": 24, "owner": None},
+    {"position": 30, "name": "Go To Jail", "type": "go_to_jail"},
+
+    {"position": 31, "name": "Pacific Avenue", "type": "property", "price": 300, "rent": 26, "owner": None},
+    {"position": 32, "name": "North Carolina Avenue", "type": "property", "price": 300, "rent": 26, "owner": None},
+    {"position": 33, "name": "Community Chest", "type": "community_chest"},
+    {"position": 34, "name": "Pennsylvania Avenue", "type": "property", "price": 320, "rent": 28, "owner": None},
+    {"position": 35, "name": "Short Line Railroad", "type": "railroad", "price": 200, "rent": 25, "owner": None},
+    {"position": 36, "name": "Chance", "type": "chance"},
+    {"position": 37, "name": "Park Place", "type": "property", "price": 350, "rent": 35, "owner": None},
+    {"position": 38, "name": "Luxury Tax", "type": "tax", "amount": 100},
+    {"position": 39, "name": "Boardwalk", "type": "property", "price": 400, "rent": 50, "owner": None},
 ]
