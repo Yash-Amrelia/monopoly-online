@@ -169,7 +169,17 @@ def roll_dice(room_id: str, data: RollDice):
 
                 if player["username"] == data.username:
 
-                    player["position"] = (player["position"] + total) % 40
+                    old_position = player["position"]
+                    new_position = old_position + total
+
+                    passed_go = False
+
+                    if new_position >= 40:
+                        player["money"] += 200
+                        passed_go = True
+
+                    player["position"] = new_position % 40
+
                     landed_tile = BOARD[player["position"]]
 
                     rent_paid = None
@@ -211,6 +221,7 @@ def roll_dice(room_id: str, data: RollDice):
                     return {
                         "dice": [dice1, dice2],
                         "total": total,
+                        "passed_go": passed_go,
                         "current_turn": game_state["current_turn"],
                         "turn_number": game_state["turn_number"],
                         "player": player,
