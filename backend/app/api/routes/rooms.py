@@ -169,6 +169,40 @@ def roll_dice(room_id: str, data: RollDice):
 
                 if player["username"] == data.username:
 
+                    # Jail logic goes here
+                    if player["in_jail"]:
+
+                        if dice1 == dice2:
+
+                            player["in_jail"] = False
+                            player["jail_turns"] = 0
+
+                        else:
+
+                            player["jail_turns"] += 1
+
+                            if player["jail_turns"] >= 3:
+
+                                player["money"] -= 50
+                                player["in_jail"] = False
+                                player["jail_turns"] = 0
+
+                            else:
+
+                                current_index = game_state["players"].index(player)
+                                next_index = (current_index + 1) % len(game_state["players"])
+
+                                game_state["current_turn"] = game_state["players"][next_index]["username"]
+                                game_state["turn_number"] += 1
+
+                                return {
+                                    "message": "Player remains in jail",
+                                    "dice": [dice1, dice2],
+                                    "player": player,
+                                    "current_turn": game_state["current_turn"],
+                                    "turn_number": game_state["turn_number"]
+                                }
+
                     old_position = player["position"]
                     new_position = old_position + total
 
