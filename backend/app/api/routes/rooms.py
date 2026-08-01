@@ -169,9 +169,17 @@ def roll_dice(room_id: str, data: RollDice):
 
                     player["position"] = (player["position"] + total) % 40
 
+                    current_index = game_state["players"].index(player)
+                    next_index = (current_index + 1) % len(game_state["players"])
+
+                    game_state["current_turn"] = game_state["players"][next_index]["username"]
+                    game_state["turn_number"] += 1
+
                     return {
                         "dice": [dice1, dice2],
                         "total": total,
+                        "current_turn": game_state["current_turn"],
+                        "turn_number": game_state["turn_number"],
                         "player": player
                     }
 
