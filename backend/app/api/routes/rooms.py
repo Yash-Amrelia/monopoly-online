@@ -182,6 +182,14 @@ def roll_dice(room_id: str, data: RollDice):
 
                     landed_tile = BOARD[player["position"]]
 
+                    if landed_tile["type"] == "go_to_jail":
+
+                        player["position"] = 10
+                        player["in_jail"] = True
+                        player["jail_turns"] = 0
+
+                        landed_tile = BOARD[10]
+
                     rent_paid = None
 
                     if (
