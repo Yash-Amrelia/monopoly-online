@@ -7,6 +7,7 @@ from app.schemas.room import RoomCreate
 from app.schemas.join_room import JoinRoom
 from app.schemas.start_game import StartGame
 from app.schemas.roll_dice import RollDice
+from app.game.board import BOARD
 
 router = APIRouter()
 
@@ -168,6 +169,7 @@ def roll_dice(room_id: str, data: RollDice):
                 if player["username"] == data.username:
 
                     player["position"] = (player["position"] + total) % 40
+                    landed_tile = BOARD[player["position"]]
 
                     current_index = game_state["players"].index(player)
                     next_index = (current_index + 1) % len(game_state["players"])
@@ -180,7 +182,8 @@ def roll_dice(room_id: str, data: RollDice):
                         "total": total,
                         "current_turn": game_state["current_turn"],
                         "turn_number": game_state["turn_number"],
-                        "player": player
+                        "player": player,
+                        "landed_on": landed_tile
                     }
 
     raise HTTPException(
