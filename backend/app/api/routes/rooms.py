@@ -1,9 +1,12 @@
+import random
+
 from fastapi import APIRouter, HTTPException
 from uuid import uuid4
 
 from app.schemas.room import RoomCreate
 from app.schemas.join_room import JoinRoom
 from app.schemas.start_game import StartGame
+from app.schemas.roll_dice import RollDice
 
 router = APIRouter()
 
@@ -104,15 +107,73 @@ def start_game(room_id: str, data: StartGame):
 
             room["game_started"] = True
 
+            # Initialize Monopoly players
+            game_players = []
+
+            for username in room["players"]:
+                game_players.append({
+                    "username": username,
+                    "money": 1500,
+                    "position": 0,
+                    "properties": [],
+                    "in_jail": False,
+                    "jail_turns": 0,
+                    "is_bankrupt": False
+                })
+
+            # Initialize game state
             room["game_state"] = {
-                "current_turn": room["players"][0],
-                "turn_number": 1
+                "current_turn": game_players[0]["username"],
+                "turn_number": 1,
+                "players": game_players
             }
 
             return {
                 "message": "Game started successfully",
                 "room": room
             }
+
+    raise HTTPException(
+        status_code=404,
+        detail="Room not found"
+    )
+
+@router.post("/rooms/{room_id}/roll-dice")
+def roll_dice(room_id: str, data: RollDice):
+
+    for room in rooms:
+
+        if room["room_id"] == room_id:
+
+            if not room["game_started"]:
+                raise HTTPException(
+                    status_code=400,
+                    detail="Game has not started"
+                )
+
+            game_state = room["game_state"]
+
+            if game_state["current_turn"] != data.username:
+                raise HTTPException(
+                    status_code=400,
+                    detail="Not your turn"
+                )
+
+            dice1 = random.randint(1, 6)
+            dice2 = random.randint(1, 6)
+            total = dice1 + dice2
+
+            for player in game_state["players"]:
+
+                if player["username"] == data.username:
+
+                    player["position"] = (player["position"] + total) % 40
+
+                    return {
+                        "dice": [dice1, dice2],
+                        "total": total,
+                        "player": player
+                    }
 
     raise HTTPException(
         status_code=404,
